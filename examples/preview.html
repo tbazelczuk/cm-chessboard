@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>cm-chessboard</title>
+    <meta name="viewport" content="width=device-width, user-scalable=yes, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles/examples.css" />
+    <link rel="stylesheet" href="../assets/styles/cm-chessboard.css" />
+    <style>
+        button {
+            padding: 15px 25px;
+        }
+
+        #moves {
+            width: 300px;
+            float: left;
+        }
+    </style>
+</head>
+
+<body>
+    <h1><a href="../">cm-chessboard</a></h1>
+    <h2>Example: Simple chessboards, view only</h2>
+    <div class="board" id="board1"></div>
+    <div id="moves"></div>
+    <br style="clear: both" />
+    <script type="module">
+        import { COLOR, Chessboard, MARKER_TYPE } from "../src/cm-chessboard/Chessboard.js"
+        import { FEN } from "../src/cm-chessboard/model/Position.js"
+
+        const boardRef = new Chessboard(document.getElementById("board1"), {
+            position: FEN.start,
+            sprite: { url: "../assets/images/chessboard-sprite-staunty.svg" },
+        })
+        const list = [
+            ['rn2k1r1/ppp1pp1p/3p2p1/5bn1/P7/2N2B2/1PPPPP2/2BNK1RR w Gkq - 4 11', 'rn2k1r1/ppp1pp1p/3p2p1/3B1bn1/P7/2N5/1PPPPP2/2BNK1RR w Gkq - 4 11', 'f3', 'd5'],
+            ['rn2k1r1/ppp1pp1p/3p2p1/3B1bn1/P7/2N5/1PPPPP2/2BNK1RR w Gkq - 4 11', 'rn2k1r1/ppp1pp1p/3p2p1/3B1b2/P7/2N4n/1PPPPP2/2BNK1RR w Gkq - 4 11', 'g5', 'h3'],
+            ['r2q1rk1/1bpnbppp/p2p1n2/1p2p3/3PP3/2P2N1P/PPB2PP1/R1BQRNK1 b - - 1 1', 'r2q1rk1/1bpnbppp/p2p1n2/1p2p3/3PP3/2PQ1N1P/PPB2PP1/R1B1RNK1 b - - 1 1', 'd1', 'd3'],
+            ['8/8/8/8/8/8/8/8 w - - 0 1', '8/8/8/8/8/8/8/8 w - - 0 1'],
+            ['r1b1rbk1/2q2ppp/3p1n2/Npp5/PP2P3/5N1P/2B2PP1/R2QR1K1 w - - 0 10', 'r1b1rbk1/2q2ppp/5n2/Nppp4/PP2P3/5N1P/2B2PP1/R2QR1K1 w - - 0 10', 'd6', 'd5'],
+            ['4rbk1/3b1ppp/1qNp1n2/1P6/1p1NP3/3B3P/5PP1/Q3R1K1 b - - 4 14', '4rbk1/3b1ppp/QqNp1n2/1P6/1p1NP3/3B3P/5PP1/4R1K1 b - - 4 14', 'a1', 'a6'],
+            ['8/6bp/3k2p1/1P6/1Np5/nB5P/4K1P1/8 b - - 6 32', '8/7p/3k2p1/1P6/1Np5/nB5P/4K1P1/b7 b - - 6 32', 'g7', 'a1'],
+            ['rnbqkbnr/ppp2ppp/4p3/3pP3/3P4/8/PPP2PPP/RNBQKBNR b KQkq - 0 3', 'rnbqkbnr/ppp2ppp/4p3/3pP3/3P3P/8/PPP2PP1/RNBQKBNR b KQkq - 0 3', 'h2', 'h4'],
+            ['R7/P5k1/8/8/8/6P1/6K1/r7 w - - 0 1', 'R7/P5k1/8/8/8/6P1/r5K1/8 w - - 0 1', 'a1', 'a2']
+        ]
+        const moves = document.getElementById("moves")
+
+        list.forEach((move, i) => {
+            const button = document.createElement("button")
+            button.innerText = `Move ${i + 1}`
+            button.addEventListener("mouseover", async () => {
+                await boardRef.setPosition(move[0])
+
+                boardRef.removeMarkers(MARKER_TYPE.square)
+                move[2] && boardRef.addMarker(MARKER_TYPE.square, move[2])
+                move[3] && boardRef.addMarker(MARKER_TYPE.square, move[3])
+
+                await boardRef.setPosition(move[1], true)
+            })
+            moves.appendChild(button)
+        })
+    </script>
+</body>
+
+</html>
