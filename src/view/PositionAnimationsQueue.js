@@ -89,7 +89,7 @@ export class PositionsAnimation {
             this.animatedElements = this.createAnimation(fromPosition.squares, toPosition.squares)
             this.duration = duration
             this.callback = callback
-            this.frameHandle = requestAnimationFrame(this.animationStep.bind(this))
+            this.frameHandle = duration ? requestAnimationFrame(this.animationStep.bind(this)) : setTimeout(this.animationStep.bind(this))
         } else {
             console.error("fromPosition", fromPosition, "toPosition", toPosition)
         }
@@ -181,9 +181,14 @@ export class PositionsAnimation {
         }
         const timeDiff = time - this.startTime
         if (timeDiff <= this.duration) {
-            this.frameHandle = requestAnimationFrame(this.animationStep.bind(this))
+            this.frameHandle = this.duration ? requestAnimationFrame(this.animationStep.bind(this)) : setTimeout(this.animationStep.bind(this))
         } else {
+<<<<<<< HEAD:src/view/PositionAnimationsQueue.js
             cancelAnimationFrame(this.frameHandle)
+=======
+            this.duration ? cancelAnimationFrame(this.frameHandle) : clearTimeout(this.frameHandle)
+            // console.log("ANIMATION FINISHED")
+>>>>>>> 76934b2 (fixed animation with duration 0ms):src/cm-chessboard/view/PositionAnimationsQueue.js
             this.animatedElements.forEach((animatedItem) => {
                 if (animatedItem.type === CHANGE_TYPE.disappear) {
                     Svg.removeElement(animatedItem.element)
