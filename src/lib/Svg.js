@@ -58,7 +58,7 @@ export class Svg {
             console.warn("removeElement, element is", element)
             return
         }
-        if (element.parentNode) {
+        if (element && element.parentNode) {
             element.parentNode.removeChild(element)
         } else {
             console.warn(element, "without parentNode")

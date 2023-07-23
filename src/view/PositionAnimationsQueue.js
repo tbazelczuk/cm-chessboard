@@ -153,7 +153,7 @@ export class PositionsAnimation {
             switch (change.type) {
                 case CHANGE_TYPE.move:
                     animatedItem.element = this.view.getPieceElement(Position.indexToSquare(change.atIndex))
-                    animatedItem.element.parentNode.appendChild(animatedItem.element) // move element to top layer
+                    animatedItem.element && animatedItem.element.parentNode && animatedItem.element.parentNode.appendChild(animatedItem.element) // move element to top layer
                     animatedItem.atPoint = this.view.indexToPoint(change.atIndex)
                     animatedItem.toPoint = this.view.indexToPoint(change.toIndex)
                     break
