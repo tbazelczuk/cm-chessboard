@@ -211,7 +211,7 @@ export class ChessboardView {
                 cssClass += file % 2 ? " white" : " black"
             }
             const textElement = Svg.addElement(this.coordinatesGroup, "text", {
-                class: cssClass, x: x, y: y, style: `font-size: ${this.scalingY * 10}px`
+                class: cssClass, x: x, y: y, style: `font-size: ${this.scalingY * 6}px`
             })
             if (this.chessboard.state.orientation === COLOR.white) {
                 textElement.textContent = String.fromCharCode(97 + file)
@@ -220,7 +220,7 @@ export class ChessboardView {
             }
         }
         for (let rank = 0; rank < 8; rank++) {
-            let x = (this.borderSize / 3.7)
+            let x = (this.borderSize / 2.5)
             let y = this.borderSize + 25 * this.scalingY + rank * this.squareHeight
             let cssClass = "coordinate rank"
             if (inline) {
@@ -234,7 +234,7 @@ export class ChessboardView {
                 }
             }
             const textElement = Svg.addElement(this.coordinatesGroup, "text", {
-                class: cssClass, x: x, y: y, style: `font-size: ${this.scalingY * 10}px`
+                class: cssClass, x: x, y: y, style: `font-size: ${this.scalingY * 6}px`
             })
             if (this.chessboard.state.orientation === COLOR.white) {
                 textElement.textContent = "" + (8 - rank)
